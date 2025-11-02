@@ -1,24 +1,22 @@
-// app/login/page.tsx
 "use client";
-
-import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { getHeaders } from "better-auth/react";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const session = authClient.useSession();
+
+  if (session) {
+    router.push("/dashboard");
+  }
   const handleSignIn = async () => {
     try {
-      await auth.api.signInSocial({
-        body: {
-          provider: "google",
-          callbackURL: "/dashboard",
-        },
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/dashboard",
       });
     } catch (error) {
       console.log(error);
@@ -48,7 +46,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/SessionWrapper";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import Header from "@/components/Header";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -20,15 +16,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <SessionWrapper>{children}</SessionWrapper>
+      <body className={`flex flex-col`}>
+        <SessionWrapper>
+          <Header />
+          {children}
+        </SessionWrapper>
       </body>
     </html>
   );

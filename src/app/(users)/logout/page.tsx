@@ -1,9 +1,6 @@
 "use client";
-import { auth } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
-import { getHeaders } from "better-auth/react";
 import { useRouter } from "next/navigation";
-
 import { useState } from "react";
 
 const Logout = () => {
@@ -13,17 +10,16 @@ const Logout = () => {
   const handleSignOut = async () => {
     try {
       setIsLoading(true);
-      await auth.api.signOut({
-        headers: await getHeaders(),
-      });
+      authClient.signOut();
     } catch (error) {
       console.log("An error occurred during log out");
     } finally {
       setIsLoading(false);
+      router.push("/login");
     }
   };
   return (
-    <div>
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <button onClick={handleSignOut} className="" disabled={isLoading}>
         Sign Out
       </button>

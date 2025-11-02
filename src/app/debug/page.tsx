@@ -5,22 +5,36 @@ import { authClient } from "@/lib/auth-client";
 
 import { useState } from "react";
 
-export default async function DebugPage() {
-  let session = authClient.useSession();
-  console.log(session);
-  let vjv = authClient.getSession();
-  console.log(vjv);
+export default function DebugPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionData, setSessionData] = useState<any>(null);
+  const [sessionData, setSessionData] = useState<any>("");
 
   const checkSession = async () => {
-    const { data } = await authClient.getSession();
-    console.log(data);
-    setSessionData(data);
+    setIsLoading(true);
+    const { data: session, error } = await authClient.getSession();
+    setSessionData(session);
+    setIsLoading(false);
+  };
+  const handleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/dashboard",
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -28,14 +42,13 @@ export default async function DebugPage() {
       <h1 className="text-2xl font-bold">Debug Information</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-4 rounded shadow">
+        <div className=" p-4 rounded shadow">
           <h2 className="text-lg font-semibold mb-2">Session State</h2>
-          <pre className="bg-gray-100 p-2 rounded text-sm">
-            {JSON.stringify({ session }, null, 2)}
+          <pre className=" p-2 rounded text-sm">
+            {JSON.stringify({ sessionData }, null, 2)}
           </pre>
         </div>
-
-        <div className="bg-white p-4 rounded shadow">
+        <div className=" p-4 rounded shadow">
           <h2 className="text-lg font-semibold mb-2">Raw Session Data</h2>
           <button
             onClick={checkSession}
@@ -43,21 +56,24 @@ export default async function DebugPage() {
           >
             Check Session
           </button>
-          <pre className="bg-gray-100 p-2 rounded text-sm">
-            {JSON.stringify(sessionData, null, 2)}
-          </pre>
         </div>
-      </div>
-
-      <div className="bg-white p-4 rounded shadow">
-        <h2 className="text-lg font-semibold mb-2">Test Actions</h2>
-        <div className="space-x-2">
-          <button
-            onClick={() => authClient.signOut()}
-            className="px-4 py-2 bg-red-500 text-white rounded"
-          >
-            Sign Out
-          </button>
+        <div className=" p-4 rounded shadow"></div>
+        <div className=" p-4 rounded shadow">
+          <h2 className="text-lg font-semibold mb-2">Test Actions</h2>
+          <div className="space-x-2">
+            <button
+              onClick={() => authClient.signOut()}
+              className="px-4 py-2 bg-red-500 text-white rounded"
+            >
+              Sign Out
+            </button>
+            <button
+              onClick={handleSignIn}
+              className="px-4 py-2 bg-red-500 text-white rounded"
+            >
+              Sign in
+            </button>
+          </div>
         </div>
       </div>
     </div>
