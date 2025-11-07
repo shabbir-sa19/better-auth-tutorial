@@ -1,11 +1,9 @@
 import { MongoClient, MongoClientOptions } from "mongodb";
 
 // 1. Get URI and throw error if not found
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017";
 if (!uri) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
+  throw new Error("Please define the MONGODB_URI environment variable");
 }
 
 // 2. Define client options

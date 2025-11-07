@@ -15,7 +15,7 @@ const Logout = () => {
       console.log("An error occurred during log out");
     } finally {
       setIsLoading(false);
-      router.push("/login");
+      router.push("/");
     }
   };
   return (

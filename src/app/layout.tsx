@@ -3,6 +3,7 @@ import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/SessionWrapper";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -21,10 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`flex flex-col`}>
+      <body className="flex flex-col min-h-screen">
         <SessionWrapper>
           <Header />
           {children}
+          <Footer />
         </SessionWrapper>
       </body>
     </html>
