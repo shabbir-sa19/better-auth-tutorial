@@ -6,12 +6,12 @@ export default function Dashboard() {
   const router = useRouter();
   const { data: session } = authClient.useSession();
   if (!session) {
-    console.log("dashboard");
-    // router.push("/");
+    router.push("/login");
   }
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      Dashboard
+    <div className="flex flex-col h-full items-center justify-center">
+      <p>Welcome, {session?.user.name}</p>
+      <p>Dashboard</p>
     </div>
   );
 }

@@ -1,23 +1,16 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState("");
+  const router = useRouter();
   const { data: session } = authClient.useSession();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter();
-
   if (session) {
-    //   router.push("/dashboard");
-    console.log(session);
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-        adfsadsf
-      </div>
-    );
+    router.push("/dashboard");
   }
 
   const [email, setEmail] = useState("");
@@ -35,15 +28,29 @@ export default function LoginPage() {
     }
   };
 
-  const handleSignInEmail = async (e: Event) => {
+  const handleSignInEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const { data, error } = await authClient.signIn.email({
-        email: email, // required
-        password: password, // required
-        rememberMe: rememberMe,
-        callbackURL: "/dashboard",
-      });
+      console.log(email);
+      console.log(password);
+      console.log(rememberMe);
+
+      const { data, error } = await authClient.signIn.email(
+        {
+          email: email, // required
+          password: password, // required
+          rememberMe: rememberMe,
+        },
+        {
+          onSuccess(context) {
+            redirect("/dashboard");
+          },
+          onError(context) {
+            setErrors("errors : " + context.error.message.toString());
+          },
+        }
+      );
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -76,12 +83,11 @@ export default function LoginPage() {
         <h2 className="text-3xl mt-2 text-center font-bold leading-tight tracking-tight text-gray-500 md:text-2xl dark:text-white">
           LogIn to your account
         </h2>
+        <p className="text-center text-sm  text-red-600 dark:text-red-500">
+          <span className="font-medium">{errors}</span>
+        </p>
         <div className="mt-8">
-          <form
-            action={() => {
-              handleSignInEmail;
-            }}
-          >
+          <form onSubmit={handleSignInEmail}>
             <div className="grid">
               <div className="mb-4">
                 <label htmlFor="email">Email</label>
