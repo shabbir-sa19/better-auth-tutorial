@@ -1,16 +1,17 @@
 import { betterAuth } from "better-auth";
 import clientPromise from "@/lib/mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { nextCookies } from "better-auth/next-js";
+import { sendResetPasswordEmail, sendVerifyEmail } from "./sendEmail";
+import verifyEmail from "@/templeates/emails/verifyEmail";
 
 const DBNAME = process.env.DBNAME || "myDatabase";
 const client = await clientPromise;
 const db = client.db(DBNAME);
 
 export const auth = betterAuth({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  database: mongodbAdapter(db, {
-    client,
-  }),
+  baseURL: process.env.NEXT_APP_URL || "http://localhost:3000",
+  database: mongodbAdapter(db, { client }),
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -20,5 +21,17 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [],
+  emailVerification: {
+    sendOnSignUp: true,
+    sendVerificationEmail: async ({ user, url, token }, request) => {
+      await sendVerifyEmail({
+        to: user.email,
+        userName: user.name,
+        subject: "Verify your email address",
+        token,
+        url,
+      });
+    },
+  },
+  plugins: [nextCookies()],
 });
