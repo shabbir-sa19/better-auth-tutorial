@@ -1,21 +1,23 @@
-import verifyEmail from "@/templeates/emails/verifyEmail";
+import verifyEmail from "@/templeates/emails/VerifyEmail";
 import { resend } from "./resend";
+import resetEmail from "@/templeates/emails/ResetEmail";
+
+type props = {
+  to: string;
+  subject: string;
+  userName: string;
+  url: string;
+  from?: string;
+  token?: string;
+};
 
 export async function sendVerifyEmail({
   to,
-  from,
-  token,
-  url,
   subject,
+  url,
   userName,
-}: {
-  to: string;
-  from?: string;
-  token: string;
-  subject?: string;
-  url?: string;
-  userName: string;
-}): Promise<void> {
+  token,
+}: props): Promise<void> {
   await resend.emails.send({
     from: "testing@resend.dev",
     to,
@@ -28,16 +30,14 @@ export async function sendVerifyEmail({
 }
 export async function sendResetPasswordEmail({
   to,
-  from,
-  token,
   url,
   subject,
   userName,
-}: {
-  to: string;
-  from?: string;
-  token?: string;
-  subject?: string;
-  url?: string;
-  userName?: string;
-}) {}
+}: props): Promise<void> {
+  await resend.emails.send({
+    from: "testing@resend.dev",
+    to,
+    subject: subject || "Reset your password",
+    react: resetEmail({ userName, url }),
+  });
+}

@@ -109,12 +109,12 @@ const Register = () => {
   };
 
   return (
-    <section className="w-full lg:w-1/4 md:w-1/3 h-full min-w-max items-center justify-center text-center mx-auto font-sans dark:bg-black">
+    <section className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 h-full justify-center self-center p-4 m-auto font-sans glass-effect shadow-3xl">
       <div className="">
-        <h2 className="text-3xl mt-2 text-center font-bold leading-tight tracking-tight text-gray-500 md:text-2xl dark:text-white">
+        <h2 className="text-2xl mt-2 text-center font-bold leading-loose xl:text-3xl">
           Create an account
         </h2>
-        <p className="text-sm p-4 font-light text-gray-500">
+        <p className="text-sm p-4 text-gray-500 text-center">
           Already have an account?{" "}
           <Link
             href="/login"
@@ -123,7 +123,7 @@ const Register = () => {
             Login here
           </Link>
         </p>
-        <p className="text-center text-sm  text-red-600">{errors}</p>
+        <p className="text-center text-sm text-red-600">{errors}</p>
       </div>
 
       <div className="mt-8">

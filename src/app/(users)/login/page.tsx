@@ -57,6 +57,7 @@ export default function LoginPage() {
       console.log(data);
     } catch (err) {
       console.log(err);
+      toast.error(errors);
     } finally {
       setIsLoading(false);
     }
@@ -119,8 +120,6 @@ export default function LoginPage() {
     }
   };
 
-  const forget_password = async () => {};
-
   // return (
   //   <div className="w-full h-full flex items-center justify-center m-auto">
   //     <form className="w-full md:w-1/3 rounded-lg">
@@ -158,7 +157,7 @@ export default function LoginPage() {
   //   </div>
   // );
   return (
-    <section className="w-full lg:w-1/4 md:w-1/3 h-full min-w-max items-center justify-center text-center m-auto font-sans dark:bg-black">
+    <section className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 justify-centers self-center text-center p-4 mt-auto box-border font-sans glass-effect">
       <div className="">
         <h2 className="text-3xl mt-2 text-center font-bold leading-tight tracking-tight text-gray-500 md:text-2xl dark:text-white">
           Log into your account
@@ -234,7 +233,7 @@ export default function LoginPage() {
         </button>
       </div>
 
-      <span className="mt-auto">OR</span>
+      <span className="">OR</span>
 
       <div className="mt-2">
         <form onSubmit={serverSignInEmail}>
@@ -286,7 +285,7 @@ export default function LoginPage() {
         <div className="">
           <p className="text-sm p-4 font-light text-gray-500">
             <Link
-              href={"/"}
+              href={"/forgot-password"}
               className="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >
               Forgot Password?
@@ -298,7 +297,8 @@ export default function LoginPage() {
   );
 }
 
-<svg
+{
+  /* <svg
   className="w-5 h-5 text-gray-800 dark:text-white"
   aria-hidden="true"
   xmlns="http://www.w3.org/2000/svg"
@@ -327,4 +327,5 @@ export default function LoginPage() {
     d="M12.037 21.998a10.313 10.313 0 0 1-7.168-3.049 9.888 9.888 0 0 1-2.868-7.118 9.947 9.947 0 0 1 3.064-6.949A10.37 10.37 0 0 1 12.212 2h.176a9.935 9.935 0 0 1 6.614 2.564L16.457 6.88a6.187 6.187 0 0 0-4.131-1.566 6.9 6.9 0 0 0-4.794 1.913 6.618 6.618 0 0 0-2.045 4.657 6.608 6.608 0 0 0 1.882 4.723 6.891 6.891 0 0 0 4.725 2.07h.143c1.41.072 2.8-.354 3.917-1.2a5.77 5.77 0 0 0 2.172-3.41l.043-.117H12.22v-3.41h9.678c.075.617.109 1.238.1 1.859-.099 5.741-4.017 9.6-9.746 9.6l-.215-.002Z"
     clip-rule="evenodd"
   />
-</svg>;
+</svg>; */
+}

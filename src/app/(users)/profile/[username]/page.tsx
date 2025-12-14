@@ -22,7 +22,6 @@ interface UserProfile {
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState("");
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const router = useRouter();
@@ -87,7 +86,6 @@ const Profile = () => {
   //       router.push("/dashboard");
   //     } catch (error) {
   //       console.error("Error updating profile:", error);
-  //       setErrors("Failed to update profile. Please try again.");
   //       toast.error("Failed to update profile");
   //     } finally {
   //       setIsLoading(false);
@@ -95,7 +93,7 @@ const Profile = () => {
   //   };
   const handleSubmit = () => {};
   return (
-    <section className="w-full max-w-4xl mx-auto p-6 font-sans dark:bg-black min-h-screen">
+    <section className="w-full max-w-4xl mx-auto p-6 font-sans dark:bg-black flex grow">
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white">
           Update Your Profile

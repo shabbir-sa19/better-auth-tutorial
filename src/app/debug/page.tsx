@@ -1,7 +1,6 @@
 // app/debug/page.tsx
 "use client";
 
-import { auth } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
 import { APIError } from "better-auth";
 import { useState } from "react";
@@ -24,7 +23,6 @@ export default function DebugPage() {
       setIsLoading(false);
     }
   };
-
   const handleSignUp = async () => {
     setIsLoading(true);
     try {
@@ -97,7 +95,6 @@ export default function DebugPage() {
       setIsLoading(false);
     }
   };
-
   const handleMailer = async () => {
     setData("mailer function is not implimented");
   };
@@ -105,9 +102,9 @@ export default function DebugPage() {
     toast("Testing...", { description: "description" });
     setTimeout(() => {
       toast.success("Testing...", { description: "success" });
-    }, 1000);
-    setTimeout(() => {
-      toast.error("Testing...", { description: "error" });
+      setTimeout(() => {
+        toast.error("Testing...", { description: "error" });
+      }, 1000);
     }, 1000);
   };
   const _google = async () => {
@@ -120,61 +117,68 @@ export default function DebugPage() {
       toast.error("an error occerred");
     }
   };
-
   if (isLoading) {
     return (
-      <div className="flex min-h-full items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <div className="flex grow min-h-full items-center justify-center font-sans">
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="p-8 space-y-6 mx-auto">
-      <h1 className="text-2xl font-bold">Debug Information</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-4">
-          <h2 className="text-lg font-semibold mb-2">Data</h2>
-          <pre className=" p-2 text-sm font-mono">
-            {JSON.stringify({ data }, null, 2)}
-          </pre>
-        </div>
-        <div className="p-4">
-          <h2 className="text-lg font-semibold mb-2">Test Functions</h2>
-          <div className="flex flex-col mb-2 gap-4">
-            <button
-              onClick={checkSession}
-              className="mb-2 px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Check Session
-            </button>
-            <button
-              onClick={() => authClient.signOut()}
-              className="mb-2 px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Sign Out
-            </button>
-            <button
-              onClick={handleSignUp}
-              className="mb-2 px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Sign in
-            </button>
-            <button
-              onClick={handleLogin}
-              className="mb-2 px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Log In
-            </button>
-            <button
-              onClick={_google}
-              className="mb-2 px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Sign up with google
-            </button>
+    <>
+      <section className="m-auto w-full p-8 space-y-6 mt-0">
+        <h1 className="text-2xl font-bold">Debug Information</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 p-2">
+          <div className="md:col-span-2">
+            <h2 className="text-lg font-semibold mb-2">Data</h2>
+            <pre className="text-sm font-mono text-wrap">
+              {JSON.stringify({ data }, null, 2)}
+            </pre>
+          </div>
+          <div className="md:-col-end-1">
+            <h2 className="text-lg font-semibold mb-2">Test Functions</h2>
+            <div className="flex flex-col m-2">
+              <button onClick={checkSession} className="button">
+                Check Session
+              </button>
+              <button onClick={() => authClient.signOut()} className="button">
+                log Out
+              </button>
+              <button onClick={handleSignUp} className="button">
+                Sign in
+              </button>
+              <button onClick={handleLogin} className="button">
+                Log In
+              </button>
+              <button onClick={_google} className="button">
+                Sign up with google
+              </button>
+              <button
+                onClick={() => {
+                  setIsLoading(true);
+                  setTimeout(() => {
+                    console.log("Loader Test");
+                    setIsLoading(false);
+                  }, 2000);
+                }}
+                className="button"
+              >
+                Test Loader
+              </button>
+              <button
+                onClick={() => {
+                  toaster();
+                }}
+                className="button"
+              >
+                Toaster
+              </button>
+              <button onClick={() => {}} className="button"></button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }

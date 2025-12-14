@@ -12,8 +12,8 @@ export const EmailVerificationTemplate: React.FC<
 > = ({
   userName,
   verificationUrl,
-  companyName = "SocialSphere",
-  supportEmail = "support@socialsphere.com",
+  companyName = "Alam incorp",
+  supportEmail = "",
 }) => (
   <div className="bg-gray-50 p-5 font-sans">
     <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
