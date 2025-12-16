@@ -1,8 +1,8 @@
-import verifyEmail from "@/templeates/emails/VerifyEmail";
 import { resend } from "./resend";
-import resetEmail from "@/templeates/emails/ResetEmail";
+import verifyEmail from "@/components/emails/VerifyEmail";
+import ResetEmail from "@/components/emails/ResetEmail";
 
-type props = {
+type EmailProps = {
   to: string;
   subject: string;
   userName: string;
@@ -17,15 +17,12 @@ export async function sendVerifyEmail({
   url,
   userName,
   token,
-}: props): Promise<void> {
+}: EmailProps): Promise<void> {
   await resend.emails.send({
     from: "testing@resend.dev",
     to,
     subject: subject || "Verify your email address",
-    react: verifyEmail({
-      userName: userName,
-      url: url || `${process.env.BETTER_AUTH_URL}/verify?token=${token}`,
-    }),
+    react: verifyEmail({ userName, url }),
   });
 }
 export async function sendResetPasswordEmail({
@@ -33,11 +30,11 @@ export async function sendResetPasswordEmail({
   url,
   subject,
   userName,
-}: props): Promise<void> {
+}: EmailProps): Promise<void> {
   await resend.emails.send({
     from: "testing@resend.dev",
     to,
     subject: subject || "Reset your password",
-    react: resetEmail({ userName, url }),
+    react: ResetEmail({ userName, url }),
   });
 }

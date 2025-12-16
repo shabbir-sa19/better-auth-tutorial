@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import "./globals.css";
+import Image from "next/image";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -21,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="auto">
+    <html lang="en" data-theme="puce">
       <body className="flex flex-col min-h-screen">
         {/* <div
           className="absolute inset-0 -z-10"
@@ -30,6 +31,7 @@ export default function RootLayout({
               "repeating-linear-gradient(45deg, #000 0px, #111 2px, #000 4px, #222 6px)",
           }}
         /> */}
+        <div className="absolute inset-0 -z-10 pattern01" />
         <Header />
         {children}
         <Footer />

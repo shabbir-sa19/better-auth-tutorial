@@ -1,4 +1,4 @@
-import WelcomeEmail from "@/components/email";
+import WelcomeEmail from "@/components/emails/email";
 import { resend } from "@/lib/resend";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     from: "onboarding@resend.dev",
     to: email,
     subject: "Hello World",
-    react: WelcomeEmail({ userFirstname: user }),
+    react: WelcomeEmail({ userName: user }),
   });
 
   const { data, error } = res;

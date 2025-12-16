@@ -4,7 +4,7 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { nextCookies } from "better-auth/next-js";
 import { sendResetPasswordEmail, sendVerifyEmail } from "./sendEmail";
 
-const DBNAME = process.env.DBNAME || "myDatabase";
+const DBNAME = process.env.DBNAME || "Demo_Database";
 const client = await clientPromise;
 const db = client.db(DBNAME);
 
@@ -19,11 +19,13 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }, request) => {
       await sendResetPasswordEmail({
         to: user.email,
+        userName: user.name,
         subject: "Reset your password",
         url,
       });
@@ -34,6 +36,7 @@ export const auth = betterAuth({
       console.log(`Password for user ${user.email} has been reset.`);
     },
   },
+
   emailVerification: {
     sendOnSignUp: true,
     sendVerificationEmail: async ({ user, url, token }, request) => {

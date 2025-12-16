@@ -1,35 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --bg-light: hsl(0, 0%, 50%);
-  --bg: hsl(0, 0, 50%);
-  --bg-dark: hsl(0, 0%, 10%);
-  --text: hsl(0 0 90%);
-  --Puce: hsl(19, 24%, 36%);
-  --path: "";
+  /*theme dark*/
+  --bg-light: hsl(0, 0%, 15%);
+  --bg: hsl(0, 0, 5%);
+  --bg-dark: hsl(0, 0%, 0%);
+
+  --text: hsl(0 0 100%);
+  --text-muted: hsl(0 0 60%);
 }
+
 :root[data-theme="light"] {
-  --bg-light: hsl(0, 0%, 90%);
-  --bg: hsl(0, 0, 50%);
+  --bg-light: hsl(0, 0%, 95%);
+  --bg: hsl(0, 0%, 85%);
   --bg-dark: hsl(0, 0%, 80%);
-  --Puce: hsl(19, 24%, 36%);
-  --text: hsl(0 0 10%);
+
+  --text: hsl(0 0 0%);
+  --text-muted: hsl(0 0 40%);
 }
+
+:root[data-theme="puce"] {
+  --bg-light: var(--Puce-light);
+  --bg: var(--Puce);
+  --bg-dark: var(--Puce-dark);
+
+  --text: hsl(0 0 0%);
+  --text-muted: hsl(19 24% 20%);
+
+  --Puce: hsl(19, 24%, 34%);
+  --Puce-dark: hsl(19, 24%, 30%);
+  --Puce-light: hsl(19, 24%, 70%);
+}
+
 body {
   background: var(--bg-dark);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
 }
 .glass-effect {
-  background: hsla(0, 0%, 0%, 0);
+  /* background: hsla(0, 0%, 0%, 0.1); */
   border-radius: var(--radius-2xl);
-  /* box-shadow: 0 4px 8px hsla(0, 39%, 89%, 0.1); */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: var(--blur-md);
-  border: 1px solid var(--bg);
+  backdrop-filter: blur(20px);
 }
 .bg-primary {
   background-color: var(--Puce);
+  color: var(--text);
 }
 .button {
   @apply m-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:cursor-pointer;
@@ -37,10 +52,25 @@ body {
 .button-2 {
   @apply px-6 py-2 border rounded-lg hover:cursor-pointer hover:bg-(--bg);
 }
+
 .bg {
-  width: 500px;
-  height: 500px;
-  position: absolute;
-  z-index: -50;
-  background-image: var(--path);
+  background-color: var(--bg);
+}
+.bg-dark {
+  background-color: var(--bg-dark);
+}
+.bg-light {
+  background-color: var(--bg-light);
+}
+.text-mute {
+  color: var(--text-muted);
+}
+.pattern01 {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg-dark) 0px,
+    var(--bg) 2px,
+    var(--bg-dark) 4px,
+    var(--bg-light) 6px
+  );
 }
